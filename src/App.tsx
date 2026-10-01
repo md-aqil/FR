@@ -1,6 +1,5 @@
 import { Theme } from './settings/types';
 import { FRAdvisoryLanding } from './components/generated/FRAdvisoryLanding';
-// %IMPORT_STATEMENT%
 
 let theme: Theme = 'light';
 
@@ -15,7 +14,7 @@ function App() {
 
   setTheme(theme);
 
-  return <FRAdvisoryLanding />; // %EXPORT_STATEMENT%
+  return <FRAdvisoryLanding />;
 }
 
 export default App;

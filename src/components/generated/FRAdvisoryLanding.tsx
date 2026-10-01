@@ -1,8 +1,10 @@
 import { useEffect, useRef, useState } from 'react';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import differentStagesBg from '../../assets/Differentstages-bg.png';
 import frPortraitImg from '../../assets/faizal-rahman.jpg';
 import frLogoImg from '../../assets/fr-logo.png';
+import unileverImg from '../../assets/unilever.jpeg';
+import ciplaLogoSvg from '../../assets/Cipla_logo.svg';
 type Route = 'Direct_FR' | 'Business_Advisor';
 type Question = {
   id: number;
@@ -224,108 +226,33 @@ const methodSteps: MethodStep[] = [{
   description: 'Define the next move: priorities, decisions, resources and the executive accountabilities that drive execution.'
 }];
 
+const EmaarLogo = () => (
+  <svg viewBox="0 0 1267.96 272.78" className="fr-brand-logo emaar-logo" aria-label="EMAAR">
+    <path d="m235.47 174.8-20.89-1.58-6.4 52.49h.01c-2.79 22.14-4.42 28.11-10.23 41.55h30.23c-1.4-8.21-.93-27.86.93-43.54l6.35-48.92Zm98.74 1.21h-45.46l44.56 91.25h16.28l1.86-3.7v-52.27l-17.24-35.28z" fill="#0A0A0B" />
+    <path d="M197.96 239.37s-16.75 10.21-33.97 9.96H62.54V145.49h107.11l5.43-20.42H62.54V21.49h96.02c8.73 0 16.99 2.49 23.36 4.98 1.52.64 3.14 1.39 4.99 2.24 1.01.47 2.1.96 3.27 1.49l-.24-26.89H14.88c6.89 16.66 6.87 27.58 6.85 39.41v185.7c.03 12.14.05 22.2-6.85 39.33h179.3l3.77-26.39v-1.99Z" fill="#c8102e" />
+    <path fill="#00843d" d="M463.79 3.31h-10.7L413.9 83.5h60.2L463.79 3.31z" />
+    <path d="M451.23 220.99c1.86 15.18 1.86 33.58-.47 46.52v.25h52.33c-5.81-13.43-7.91-19.9-10.7-42.04l-6.39-49.7h-40.48l5.71 44.98Zm356.91 9.95c-7.06 16.92-10.47 23.14-20.26 36.82h31.42l37.35-91.75h-26.03l-22.47 54.93Zm170.78 36.82h53.06c-14.12-14.93-18.67-21.64-28.46-43.29l-20.11-48.46h-42.27l37.78 91.75Z" fill="#0A0A0B" />
+    <path fill="#00843d" d="m899.44 64.34 7.26 19.16h38.32L911.75 3.31h-10.47L868.47 83.5h23.86l7.11-19.16zm-264.45 0 7.26 19.16h38.47L647.54 3.31h-10.48L604.25 83.5h23.63l7.11-19.16z" />
+    <path d="M714.48 267.76h53.05c-13.89-14.93-18.67-21.64-28.46-43.29l-20.06-48.46H676.7l37.78 91.75Zm-170.55-36.82c-7.06 16.92-10.48 23.14-20.5 36.82h31.43l37.35-91.75h-25.8l-22.47 54.93h-.01Zm660.42 36.82h51.4c-3.31-3.44-54.93-56.23-89.66-91.75h-48.26c35.23 42.18 63.97 70.1 86.51 91.75h.01Zm-165.43-40.4v.9c.03 12.12.05 22.15-6.93 39.25h55.46c-6.68-16.89-7.14-27.1-7.17-38.86v-52.64h-41.36v51.35Z" fill="#0A0A0B" />
+    <path fill="#00843d" d="M1072.67 23.81c73.22-2.9 80.67 34.13 81.33 51.08.1 2.8-.02 5.7-.34 8.6h57.71c.25-2.46.39-4.98.39-7.6 0-73-81.08-72.72-120.56-72.58h-59.22c6.98 16.63 6.96 27.52 6.93 39.33v40.83h33.75V23.81h.01Z" />
+    <path d="m368.69 176.01-17.23 35.28v52.27l43.95-87.55h-26.72z" fill="#0A0A0B" />
+    <path d="M945.02 83.5H906.7l23.57 62.21h-61.03l23.08-62.21h-23.86l-37.85 92.51h26.03l2.05-5.03h80.38l2.07 5.03h42.27L945.02 83.5zm-264.3 0h-38.47l23.58 62.21H604.8l23.08-62.21h-23.63l-37.85 92.51h25.8l2.05-5.03h80.38l2.07 5.03h42.31L680.72 83.5zm530.66.01h-57.71c-1.69 15.36-9.66 31.29-27.72 38.23 0 0-.44.22-1.1.45-5.97 2.57-20 3.18-32.01 3.18-10.92 0-20.16-.51-20.16-.51V83.5h-33.75v92.51h41.36v-31.27c5.26.25 13.62 2.24 25.34 16.4 4.16 5.16 8.22 10.08 12.22 14.87h48.26L1134.8 144l10.76-.99c33.52-5.11 62.23-24.34 65.83-59.5ZM474.1 83.5h-60.2l-45.21 92.51h26.72l40-79.66 10.11 79.66H486L474.1 83.5zm-185.13 0h-63.26l-11.13 89.72 20.89 1.58 10.63-86.16 42.65 87.37h45.46L288.97 83.5z" fill="#0A0A0B" />
+    <path fill="#00843d" d="M225.71 83.5h63.26L249.76 3.31h-14.13l-9.92 80.19z" />
+  </svg>
+);
+
 const clientLogos = [
   {
     name: 'Unilever',
-    sub: 'Middle East & Gulf',
-    icon: (
-      <svg className="fr-client-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
-        <path d="M6 4C6 10 7 19 12 19C17 19 18 10 18 4" strokeLinecap="round" />
-        <circle cx="9" cy="8" r="1.5" fill="currentColor" stroke="none" />
-        <circle cx="15" cy="8" r="1.5" fill="currentColor" stroke="none" />
-        <path d="M12 12C13 13.5 13 15 12 16.5" strokeLinecap="round" />
-      </svg>
-    )
+    logo: <img src={unileverImg} alt="Unilever" className="fr-brand-logo-img unilever-logo-img" />
   },
   {
     name: 'EMAAR',
-    sub: 'Properties & Hospitality',
-    icon: (
-      <svg className="fr-client-icon" viewBox="0 0 24 24" fill="currentColor">
-        <polygon points="12,2 15,9 22,9 16.5,14 18.5,21 12,17 5.5,21 7.5,14 2,9 9,9" />
-      </svg>
-    )
-  },
-  {
-    name: 'Al Ghandi Group',
-    sub: 'Automotive & Commercial',
-    icon: (
-      <svg className="fr-client-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
-        <rect x="3" y="3" width="18" height="18" rx="4" />
-        <path d="M3 12h18M12 3v18M7 7l10 10" />
-      </svg>
-    )
-  },
-  {
-    name: 'SEDCO Holding',
-    sub: 'Investment & Wealth',
-    icon: (
-      <svg className="fr-client-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
-        <polygon points="12 2 21 7 21 17 12 22 3 17 3 7" strokeLinejoin="round" />
-        <polyline points="12 22 12 12 21 7" />
-        <line x1="12" y1="12" x2="3" y2="7" />
-      </svg>
-    )
-  },
-  {
-    name: 'Hotpack Global',
-    sub: 'Packaging & FMCG',
-    icon: (
-      <svg className="fr-client-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
-        <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" strokeLinecap="round" strokeLinejoin="round" />
-      </svg>
-    )
-  },
-  {
-    name: 'DSF',
-    sub: 'Dubai Festivals & Retail',
-    icon: (
-      <svg className="fr-client-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
-        <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z" />
-        <line x1="3" y1="6" x2="21" y2="6" />
-        <path d="M16 10a4 4 0 0 1-8 0" />
-      </svg>
-    )
+    logo: <EmaarLogo />
   },
   {
     name: 'Cipla',
-    sub: 'Healthcare & Life Sciences',
-    icon: (
-      <svg className="fr-client-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
-        <circle cx="12" cy="12" r="9" />
-        <path d="M12 3a9 9 0 0 1 9 9M12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6z" strokeLinecap="round" />
-      </svg>
-    )
-  },
-  {
-    name: 'IPA Group',
-    sub: 'Consulting & Projects',
-    icon: (
-      <svg className="fr-client-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
-        <rect x="2" y="7" width="20" height="14" rx="2" />
-        <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16" />
-      </svg>
-    )
-  },
-  {
-    name: 'Park Point',
-    sub: 'Development & Real Estate',
-    icon: (
-      <svg className="fr-client-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
-        <path d="M12 2l8 4.5v11L12 22l-8-4.5v-11L12 2z" strokeLinejoin="round" />
-        <path d="M12 6v12M8 10l8 4M8 14l8-4" />
-      </svg>
-    )
-  },
-  {
-    name: 'Kiltons Group',
-    sub: 'Business Setup UAE',
-    icon: (
-      <svg className="fr-client-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
-        <path d="M2 4l3 12h14l3-12-6 7-4-7-4 7-6-7z" strokeLinecap="round" strokeLinejoin="round" />
-        <circle cx="12" cy="19" r="1.5" fill="currentColor" />
-      </svg>
-    )
+    logo: <img src={ciplaLogoSvg} alt="Cipla" className="fr-brand-logo-img cipla-logo-img" />
   }
 ];
 const focusableSelector = 'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])';
@@ -463,18 +390,41 @@ function DiagnosticModal({
 }
 export function FRAdvisoryLanding() {
   const [modalRoute, setModalRoute] = useState<Route | null>(null);
-  const openModal = (route: Route) => setModalRoute(route);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
+  const openModal = (route: Route) => {
+    setMobileMenuOpen(false);
+    setModalRoute(route);
+  };
+
+  const closeMobileMenu = () => setMobileMenuOpen(false);
+
+  useEffect(() => {
+    if (mobileMenuOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [mobileMenuOpen]);
+
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape' && mobileMenuOpen) {
+        setMobileMenuOpen(false);
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [mobileMenuOpen]);
+
   return <main className="fr-page">
     <style>{styles}</style>
-    <motion.nav
-      className="fr-nav"
-      aria-label="Primary navigation"
-      initial={{ y: -16, opacity: 0 }}
-      animate={{ y: 0, opacity: 1 }}
-      transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
-    >
+    <header className="fr-nav" role="banner">
       <div className="fr-container fr-nav-inner">
-        <a className="fr-wordmark" href="#top" aria-label="Go ToFR Home">
+        <a className="fr-wordmark" href="#top" aria-label="Go ToFR Home" onClick={closeMobileMenu}>
           <img src={frLogoImg} alt="FR" className="fr-logo-img" />
         </a>
         <div className="fr-nav-links">
@@ -482,19 +432,97 @@ export function FRAdvisoryLanding() {
           <a href="#method"><span>How It Works</span></a>
           <a href="#proof"><span>Outcomes</span></a>
           <a href="#about"><span>The Strategist</span></a>
-          <a href="https://grow.profitfr.com/podcast" target="_blank" rel="noreferrer"><span>Podcast</span></a>
         </div>
-        <button
-          className="fr-nav-cta"
-          type="button"
-          onClick={() => openModal('Direct_FR')}
-        >
-          <span className="fr-pulse-dot">●</span>
-          <span>Apply Now</span>
-          <span className="fr-cta-arrow">→</span>
-        </button>
+        <div className="fr-nav-right">
+          <button
+            className="fr-nav-cta"
+            type="button"
+            onClick={() => openModal('Direct_FR')}
+          >
+            <span className="fr-pulse-dot">●</span>
+            <span>Apply Now</span>
+            <span className="fr-cta-arrow">→</span>
+          </button>
+          <button
+            className={`fr-menu-toggle ${mobileMenuOpen ? 'is-active' : ''}`}
+            type="button"
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            aria-label={mobileMenuOpen ? 'Close navigation menu' : 'Open navigation menu'}
+            aria-expanded={mobileMenuOpen}
+          >
+            <span className="fr-toggle-bar bar-1" />
+            <span className="fr-toggle-bar bar-2" />
+            <span className="fr-toggle-bar bar-3" />
+          </button>
+        </div>
       </div>
-    </motion.nav>
+
+      <AnimatePresence>
+        {mobileMenuOpen && (
+          <motion.div
+            className="fr-mobile-overlay"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.22 }}
+            onClick={closeMobileMenu}
+          >
+            <motion.div
+              className="fr-mobile-menu"
+              initial={{ opacity: 0, y: -20, scale: 0.98 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              exit={{ opacity: 0, y: -16, scale: 0.98 }}
+              transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
+              onClick={(e) => e.stopPropagation()}
+            >
+              <div className="fr-mobile-links">
+                <a href="#fork" onClick={closeMobileMenu} className="fr-mobile-link">
+                  <span className="fr-link-num">01</span>
+                  <span className="fr-link-label">Protocol</span>
+                  <span className="fr-link-arrow">→</span>
+                </a>
+                <a href="#method" onClick={closeMobileMenu} className="fr-mobile-link">
+                  <span className="fr-link-num">02</span>
+                  <span className="fr-link-label">How It Works</span>
+                  <span className="fr-link-arrow">→</span>
+                </a>
+                <a href="#proof" onClick={closeMobileMenu} className="fr-mobile-link">
+                  <span className="fr-link-num">03</span>
+                  <span className="fr-link-label">Outcomes</span>
+                  <span className="fr-link-arrow">→</span>
+                </a>
+                <a href="#about" onClick={closeMobileMenu} className="fr-mobile-link">
+                  <span className="fr-link-num">04</span>
+                  <span className="fr-link-label">The Strategist</span>
+                  <span className="fr-link-arrow">→</span>
+                </a>
+              </div>
+
+              <div className="fr-mobile-actions">
+                <button
+                  className="fr-mobile-cta-primary"
+                  type="button"
+                  onClick={() => openModal('Direct_FR')}
+                >
+                  <span>Apply to Work With FR →</span>
+                </button>
+                <button
+                  className="fr-mobile-cta-secondary"
+                  type="button"
+                  onClick={() => openModal('Business_Advisor')}
+                >
+                  <span>Meet a Business Advisor (Complimentary)</span>
+                </button>
+              </div>
+
+              <div className="fr-mobile-footer">
+                <p><span>Strategic Advisory with FR · Confidential & Direct</span></p>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </header>
 
     <section className="fr-hero" id="top" aria-labelledby="hero-title">
       <div className="fr-hero-ambient-glow fr-glow-1" aria-hidden="true" />
@@ -536,10 +564,6 @@ export function FRAdvisoryLanding() {
               transition: { duration: 0.28, ease: 'easeOut' }
             }}
           >
-            <div className="fr-card-top">
-              <span className="fr-vector fr-vector-gold">VECTOR 01 // DIRECT ENGAGEMENT</span>
-              <span className="fr-card-arrow" aria-hidden="true">↗</span>
-            </div>
             <div className="fr-card-body">
               <p className="fr-route"><span>I know what I need</span></p>
               <h2><span>Go Straight to FR</span></h2>
@@ -560,10 +584,6 @@ export function FRAdvisoryLanding() {
               transition: { duration: 0.28, ease: 'easeOut' }
             }}
           >
-            <div className="fr-card-top">
-              <span className="fr-vector fr-vector-muted">VECTOR 02 // DISCOVERY AUDIT</span>
-              <span className="fr-card-arrow" aria-hidden="true">↗</span>
-            </div>
             <div className="fr-card-body">
               <p className="fr-route"><span>I need clarity first</span></p>
               <h2><span>Start With a Business Advisor</span></h2>
@@ -604,13 +624,11 @@ export function FRAdvisoryLanding() {
 
       <div className="fr-marquee-wrapper" aria-hidden="true">
         <div className="fr-marquee-track">
-          {clientLogos.concat(clientLogos).map((client, idx) => <div className="fr-client-card" key={`${client.name}-${idx}`}>
-            <span className="fr-client-icon-wrap">{client.icon}</span>
-            <div className="fr-client-info">
-              <span className="fr-client-name-text">{client.name}</span>
-              <span className="fr-client-sub">{client.sub}</span>
+          {[...clientLogos, ...clientLogos, ...clientLogos, ...clientLogos].map((client, idx) => (
+            <div className="fr-client-card" key={`${client.name}-${idx}`} title={client.name}>
+              {client.logo}
             </div>
-          </div>)}
+          ))}
         </div>
       </div>
     </section>
@@ -744,7 +762,7 @@ export function FRAdvisoryLanding() {
         <div className="fr-dark-rule" aria-hidden="true" />
         <div className="fr-method-intro">
           <p className="fr-eyebrow"><span>THE FR NEXT MOVE METHOD</span></p>
-          <h3><span>Business Intelligence. Strategic Choices. Decisive Action.</span></h3>
+          <h3><span>Strategic Insight. Executive Choices. Decisive Action.</span></h3>
         </div>
         <div className="fr-method-grid">
           {methodSteps.map(step => <article className="fr-method-step" key={step.number}>
@@ -780,7 +798,7 @@ export function FRAdvisoryLanding() {
         <button className="fr-footer-apply" type="button" onClick={() => openModal('Direct_FR')}>
           <span>Apply Now →</span>
         </button>
-        <p><span>© 2025 Go ToFR. All rights reserved.</span></p>
+        <p><span>© 2026 Go ToFR. All rights reserved.</span></p>
       </div>
     </footer>
 
@@ -837,9 +855,9 @@ const styles = `
 .fr-nav {
   position: sticky;
   top: 0;
-  z-index: 100;
+  z-index: 9999;
   min-height: 76px;
-  background: rgba(250, 250, 248, 0.88);
+  background: rgba(250, 250, 248, 0.94);
   border-bottom: 1px solid rgba(226, 226, 220, 0.85);
   backdrop-filter: blur(24px) saturate(180%);
   -webkit-backdrop-filter: blur(24px) saturate(180%);
@@ -964,6 +982,210 @@ const styles = `
   font-size: 9px;
   color: var(--gold-light);
   animation: pulse 2s infinite;
+}
+
+.fr-nav-right {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.fr-menu-toggle {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  width: 42px;
+  height: 42px;
+  padding: 8px;
+  background: var(--canvas-raised);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.fr-menu-toggle:hover {
+  background: var(--canvas-sunken);
+  border-color: var(--gold);
+}
+
+.fr-toggle-bar {
+  display: block;
+  width: 20px;
+  height: 2px;
+  background: var(--obsidian);
+  border-radius: 2px;
+  transition: transform 0.25s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.2s ease;
+}
+
+.fr-menu-toggle.is-active .bar-1 {
+  transform: translateY(7px) rotate(45deg);
+}
+
+.fr-menu-toggle.is-active .bar-2 {
+  opacity: 0;
+  transform: scaleX(0);
+}
+
+.fr-menu-toggle.is-active .bar-3 {
+  transform: translateY(-7px) rotate(-45deg);
+}
+
+.fr-mobile-overlay {
+  position: fixed;
+  top: 76px;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 100vh;
+  height: 100dvh;
+  background: rgba(10, 10, 11, 0.65);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  z-index: 9998;
+  display: flex;
+  flex-direction: column;
+  padding: 16px 20px 24px;
+  overflow-y: auto;
+}
+
+.fr-mobile-menu {
+  background: var(--canvas);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 24px 20px;
+  box-shadow: 0 20px 50px -10px rgba(0, 0, 0, 0.25);
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.fr-mobile-links {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.fr-mobile-link {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 13px 16px;
+  border-radius: 12px;
+  text-decoration: none;
+  background: transparent;
+  transition: all 0.22s ease;
+}
+
+.fr-mobile-link:hover,
+.fr-mobile-link:active {
+  background: var(--canvas-raised);
+}
+
+.fr-link-num {
+  font-family: var(--sans);
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--gold-deep);
+  letter-spacing: 0.08em;
+}
+
+.fr-link-label {
+  font-family: var(--sans);
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--obsidian);
+  letter-spacing: -0.01em;
+  flex: 1;
+}
+
+.fr-link-arrow {
+  color: var(--obsidian-30);
+  font-size: 16px;
+  transition: transform 0.2s ease, color 0.2s ease;
+}
+
+.fr-mobile-link:hover .fr-link-arrow {
+  color: var(--gold);
+  transform: translateX(4px);
+}
+
+.fr-link-badge {
+  padding: 4px 10px;
+  border-radius: 100px;
+  background: rgba(197, 168, 128, 0.18);
+  border: 1px solid rgba(197, 168, 128, 0.4);
+  color: var(--gold-deep);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+}
+
+.fr-mobile-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding-top: 16px;
+  border-top: 1px solid var(--border);
+}
+
+.fr-mobile-cta-primary {
+  width: 100%;
+  padding: 15px 24px;
+  border-radius: 100px;
+  background: var(--obsidian);
+  border: 1px solid var(--obsidian);
+  color: #FFFFFF;
+  font-family: var(--sans);
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.18);
+  transition: all 0.25s ease;
+}
+
+.fr-mobile-cta-primary:active {
+  transform: scale(0.98);
+}
+
+.fr-mobile-cta-secondary {
+  width: 100%;
+  padding: 13px 20px;
+  border-radius: 100px;
+  background: transparent;
+  border: 1.5px solid var(--border);
+  color: var(--obsidian);
+  font-family: var(--sans);
+  font-size: 13px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  transition: all 0.22s ease;
+}
+
+.fr-mobile-cta-secondary:active {
+  background: var(--canvas-sunken);
+  border-color: var(--obsidian);
+}
+
+.fr-mobile-footer {
+  text-align: center;
+  padding-top: 4px;
+}
+
+.fr-mobile-footer p {
+  margin: 0;
+  color: var(--obsidian-30);
+  font-size: 11px;
+  line-height: 1.4;
 }
 
 .fr-hero {
@@ -1342,9 +1564,9 @@ const styles = `
 .fr-marquee-track {
   display: flex;
   align-items: center;
-  gap: 20px;
+  gap: 32px;
   width: max-content;
-  animation: marqueeScroll 34s linear infinite;
+  animation: marqueeScroll 28s linear infinite;
 }
 
 .fr-marquee-track:hover {
@@ -1363,68 +1585,57 @@ const styles = `
 .fr-client-card {
   display: inline-flex;
   align-items: center;
-  gap: 14px;
-  padding: 14px 26px;
-  background: rgba(255, 255, 255, 0.9);
+  justify-content: center;
+  height: 88px;
+  padding: 16px 48px;
+  background: rgba(255, 255, 255, 0.96);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(226, 226, 220, 0.9);
-  border-radius: 12px;
-  box-shadow: 0 4px 14px -3px rgba(0, 0, 0, 0.04);
+  border: 1px solid rgba(226, 226, 220, 0.95);
+  border-radius: 16px;
+  box-shadow: 0 6px 20px -4px rgba(0, 0, 0, 0.05);
   transition: all 0.28s cubic-bezier(0.22, 1, 0.36, 1);
   white-space: nowrap;
   user-select: none;
+  flex-shrink: 0;
 }
 
 .fr-client-card:hover {
   background: #FFFFFF;
-  border-color: rgba(197, 168, 128, 0.7);
-  transform: translateY(-3px) scale(1.02);
-  box-shadow: 0 12px 28px -6px rgba(0, 0, 0, 0.08), 0 0 20px rgba(197, 168, 128, 0.2);
+  border-color: rgba(197, 168, 128, 0.75);
+  transform: translateY(-4px) scale(1.03);
+  box-shadow: 0 16px 36px -8px rgba(0, 0, 0, 0.1), 0 0 24px rgba(197, 168, 128, 0.25);
 }
 
-.fr-client-icon-wrap {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.fr-client-icon {
-  width: 28px;
-  height: 28px;
-  flex-shrink: 0;
-  color: var(--gold-deep);
-  transition: transform 0.25s ease, color 0.25s ease;
-}
-
-.fr-client-card:hover .fr-client-icon {
-  transform: scale(1.1);
-  color: var(--gold);
-}
-
-.fr-client-info {
-  display: flex;
-  flex-direction: column;
-}
-
-.fr-client-name-text {
-  font-family: var(--sans);
-  font-size: 15px;
-  font-weight: 700;
-  letter-spacing: 0.05em;
-  color: var(--obsidian);
-  text-transform: uppercase;
-}
-
-.fr-client-sub {
-  font-family: var(--sans);
-  font-size: 10.5px;
-  font-weight: 500;
-  color: var(--obsidian-30);
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
+.fr-brand-logo-img {
+  max-width: 190px;
+  width: auto;
+  object-fit: contain;
   display: block;
-  margin-top: 1px;
+}
+
+.unilever-logo-img {
+  height: 64px;
+  max-width: 180px;
+  object-fit: contain;
+}
+
+.cipla-logo-img {
+  height: 48px;
+  max-width: 180px;
+  object-fit: contain;
+}
+
+.fr-brand-logo {
+  max-width: 220px;
+  width: auto;
+  display: block;
+}
+
+.emaar-logo {
+  height: 50px;
+  max-width: 220px;
+  width: auto;
 }
 
 .fr-divider,
@@ -2043,51 +2254,60 @@ const styles = `
 
 .fr-footer {
   border-top: 1px solid var(--border);
-  background: var(--canvas);
+  background: var(--canvas-raised);
 }
 
 .fr-footer-inner {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 24px;
-  padding-top: 40px;
-  padding-bottom: 40px;
+  gap: 32px;
+  padding-top: 36px;
+  padding-bottom: 36px;
 }
 
-.fr-footer .fr-wordmark {
-  font-size: 18px;
-}
-
-.fr-footer p {
-  margin: 0;
-  color: var(--obsidian-30);
-  font-size: 12px;
-  line-height: 18px;
+.fr-footer .fr-logo-img {
+  height: 46px;
+  width: 46px;
 }
 
 .fr-footer-apply {
-  background: transparent;
-  border: 0;
-  color: var(--obsidian-60);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 10px 22px;
+  border-radius: 100px;
+  background: var(--obsidian);
+  color: #FFFFFF;
+  border: 1px solid var(--obsidian);
   font-family: var(--sans);
   font-size: 13.5px;
   font-weight: 600;
   cursor: pointer;
-  padding: 8px 16px;
-  border-radius: 100px;
-  transition: all 0.22s ease;
+  transition: all 0.25s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .fr-footer-apply:hover {
-  color: var(--obsidian);
-  background: rgba(0, 0, 0, 0.04);
+  background: var(--gold-deep);
+  border-color: var(--gold-deep);
+  color: #FFFFFF;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(140, 115, 85, 0.3);
+}
+
+.fr-footer p {
+  margin: 0;
+  color: var(--obsidian-60);
+  font-size: 13px;
+  font-weight: 400;
+  line-height: 1.5;
 }
 
 .fr-modal-overlay {
   position: fixed;
   inset: 0;
-  z-index: 1000;
+  z-index: 20000;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -2283,8 +2503,22 @@ const styles = `
     display: none;
   }
 
+  .fr-menu-toggle {
+    display: flex;
+  }
+
   .fr-hero-inner {
-    padding-top: 96px;
+    padding-top: 56px;
+    padding-bottom: 64px;
+  }
+
+  .fr-vector {
+    display: none !important;
+  }
+
+  .fr-card-top {
+    justify-content: flex-end;
+    margin-bottom: 12px;
   }
 
   .fr-fork-grid,
@@ -2300,12 +2534,12 @@ const styles = `
   }
 
   .fr-about-grid {
-    gap: 52px;
+    gap: 40px;
   }
 
   .fr-method-step,
   .fr-method-step + .fr-method-step {
-    padding: 32px 0;
+    padding: 28px 0;
     border-right: 0;
     border-bottom: 1px solid rgba(255, 255, 255, 0.08);
   }
@@ -2339,17 +2573,177 @@ const styles = `
 
 @media (max-width: 640px) {
   .fr-container {
-    padding: 0 24px;
+    padding: 0 20px;
+  }
+
+  .fr-nav {
+    min-height: 60px;
   }
 
   .fr-nav-inner {
-    gap: 14px;
+    min-height: 60px;
+    padding-top: 6px;
+    padding-bottom: 6px;
+    gap: 12px;
+  }
+
+  .fr-logo-img {
+    height: 40px;
+    width: 40px;
   }
 
   .fr-nav-cta {
-    padding: 8px 16px;
-    font-size: 12.5px;
-    min-height: 36px;
+    padding: 7px 14px;
+    font-size: 11.5px;
+    min-height: 32px;
+    gap: 6px;
+  }
+
+  .fr-menu-toggle {
+    width: 38px;
+    height: 38px;
+    padding: 7px;
+  }
+
+  .fr-hero-inner {
+    padding-top: 36px;
+    padding-bottom: 48px;
+  }
+
+  .fr-hero-badge {
+    margin-bottom: 16px;
+    padding: 5px 12px;
+    font-size: 10px;
+    letter-spacing: 0.1em;
+  }
+
+  .fr-hero h1 {
+    font-size: clamp(34px, 8.5vw, 46px);
+    line-height: 1.08;
+    letter-spacing: -0.03em;
+    margin-bottom: 18px;
+  }
+
+  .fr-hero-lede {
+    font-size: 16px;
+    line-height: 1.6;
+    margin-bottom: 28px;
+  }
+
+  .fr-hero-lede p {
+    margin-bottom: 10px;
+  }
+
+  .fr-fork-grid {
+    gap: 16px;
+  }
+
+  .fr-fork-card {
+    min-height: auto;
+    padding: 26px 20px;
+    border-radius: 14px;
+  }
+
+  .fr-card-top {
+    margin-bottom: 8px;
+    justify-content: flex-end;
+  }
+
+  .fr-fork-card h2 {
+    font-size: 24px;
+    line-height: 1.2;
+    margin: 0 0 10px;
+  }
+
+  .fr-route {
+    font-size: 12px;
+    margin-bottom: 6px;
+  }
+
+  .fr-card-copy {
+    font-size: 14px;
+    line-height: 1.55;
+    margin-bottom: 22px;
+  }
+
+  .fr-gold-button,
+  .fr-outline-button {
+    width: 100%;
+    padding: 13px 20px;
+    font-size: 14px;
+    border-radius: 100px;
+  }
+
+  .fr-footnote {
+    margin-top: 14px;
+    font-size: 12px;
+    line-height: 1.5;
+    text-align: center;
+  }
+
+  .fr-section {
+    padding: 56px 0;
+  }
+
+  .fr-section-heading {
+    margin: 0 0 24px;
+  }
+
+  .fr-eyebrow {
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    margin-bottom: 6px;
+  }
+
+  .fr-section-heading h2 {
+    font-size: clamp(28px, 7vw, 38px);
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    margin-top: 8px;
+  }
+
+  .fr-trusted {
+    padding: 44px 0 48px;
+  }
+
+  .fr-trusted-header {
+    margin-bottom: 28px;
+  }
+
+  .fr-trusted-heading {
+    font-size: 26px;
+    margin-bottom: 14px;
+  }
+
+  .fr-merged-quote p {
+    font-size: clamp(18px, 4.8vw, 22px);
+    line-height: 1.48;
+  }
+
+  .fr-merged-quote cite {
+    margin-top: 12px;
+    font-size: 12px;
+  }
+
+  .fr-client-card {
+    height: 72px;
+    padding: 12px 30px;
+    border-radius: 12px;
+  }
+
+  .unilever-logo-img {
+    height: 50px;
+    max-width: 140px;
+  }
+
+  .cipla-logo-img {
+    height: 38px;
+    max-width: 140px;
+  }
+
+  .emaar-logo {
+    height: 40px;
+    max-width: 170px;
   }
 
   .fr-ribbon {
@@ -2359,14 +2753,10 @@ const styles = `
     line-height: 1.5;
   }
 
-  .fr-fork-card {
-    padding: 32px 24px;
-  }
-
   .fr-outcome-row {
     grid-template-columns: 1fr;
-    gap: 14px;
-    padding: 34px 0;
+    gap: 12px;
+    padding: 28px 0;
   }
 
   .fr-figure {
@@ -2383,22 +2773,33 @@ const styles = `
 
   .fr-stage-cell {
     min-height: auto;
-    padding: 30px 24px;
+    padding: 26px 20px;
   }
 
   .fr-about-grid {
     grid-template-columns: 1fr;
+    gap: 32px;
   }
 
-  .fr-ready-actions,
-  .fr-footer-inner,
-  .fr-form-actions {
+  .fr-ready {
+    padding: 64px 0;
+  }
+
+  .fr-ready h2 {
+    font-size: clamp(32px, 8vw, 44px);
+    line-height: 1.1;
+  }
+
+  .fr-ready p {
+    font-size: 15.5px;
+    line-height: 1.6;
+    margin: 14px 0 28px;
+  }
+
+  .fr-ready-actions {
     flex-direction: column;
     align-items: stretch;
-  }
-
-  .fr-footer-inner {
-    align-items: flex-start;
+    gap: 12px;
   }
 
   .fr-primary-dark,
@@ -2406,6 +2807,44 @@ const styles = `
   .fr-submit,
   .fr-back {
     width: 100%;
+    text-align: center;
+    justify-content: center;
+    padding: 14px 20px;
+  }
+
+  .fr-footer-inner {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 20px;
+    padding-top: 36px;
+    padding-bottom: 36px;
+  }
+
+  .fr-footer .fr-logo-img {
+    height: 44px;
+    width: 44px;
+  }
+
+  .fr-footer-apply {
+    width: 100%;
+    max-width: 260px;
+    justify-content: center;
+    padding: 12px 20px;
+    font-size: 13.5px;
+  }
+
+  .fr-footer p {
+    font-size: 12px;
+    color: var(--obsidian-60);
+    text-align: center;
+  }
+
+  .fr-mobile-overlay {
+    top: 60px;
+    height: 100vh;
+    height: 100dvh;
+    padding: 12px 16px 20px;
   }
 
   .fr-step-line {
@@ -2421,6 +2860,7 @@ const styles = `
   .fr-modal {
     width: 100%;
     max-height: 94dvh;
+    padding: 28px 20px;
   }
 }
 `;
