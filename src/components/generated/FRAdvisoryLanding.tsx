@@ -1,6 +1,8 @@
 import { useEffect, useRef, useState } from 'react';
 import { motion } from 'framer-motion';
 import differentStagesBg from '../../assets/Differentstages-bg.png';
+import frPortraitImg from '../../assets/faizal-rahman.jpg';
+import frLogoImg from '../../assets/fr-logo.png';
 type Route = 'Direct_FR' | 'Business_Advisor';
 type Question = {
   id: number;
@@ -472,26 +474,25 @@ export function FRAdvisoryLanding() {
       transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
     >
       <div className="fr-container fr-nav-inner">
-        <a className="fr-wordmark" href="#top">
-          <span className="fr-wordmark-text">F R</span>
-          <span className="fr-wordmark-dot" />
+        <a className="fr-wordmark" href="#top" aria-label="Go ToFR Home">
+          <img src={frLogoImg} alt="FR" className="fr-logo-img" />
         </a>
         <div className="fr-nav-links">
           <a href="#fork"><span>Protocol</span></a>
           <a href="#method"><span>How It Works</span></a>
           <a href="#proof"><span>Outcomes</span></a>
           <a href="#about"><span>The Strategist</span></a>
+          <a href="https://grow.profitfr.com/podcast" target="_blank" rel="noreferrer"><span>Podcast</span></a>
         </div>
-        <a
+        <button
           className="fr-nav-cta"
-          href="https://grow.profitfr.com/podcast"
-          target="_blank"
-          rel="noreferrer"
+          type="button"
+          onClick={() => openModal('Direct_FR')}
         >
           <span className="fr-pulse-dot">●</span>
-          <span>Podcast</span>
-          <span className="fr-cta-arrow">↗</span>
-        </a>
+          <span>Apply Now</span>
+          <span className="fr-cta-arrow">→</span>
+        </button>
       </div>
     </motion.nav>
 
@@ -617,39 +618,33 @@ export function FRAdvisoryLanding() {
     <section className="fr-section fr-proof" id="proof" aria-labelledby="proof-title">
       <div className="fr-container">
         <motion.div
-          initial={{ opacity: 0, y: 24 }}
+          initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: '-40px' }}
           transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
         >
           <SectionHeading label="CLIENT RESULTS · AUDITED OUTCOMES" title="Real businesses." accent="Measurable change." />
         </motion.div>
+        <div className="fr-heading-rule" aria-hidden="true" />
         <div className="fr-outcome-list">
           {outcomes.map((outcome, idx) => <motion.article
             className="fr-outcome-row"
             key={outcome.audit}
-            initial={{ opacity: 0, y: 28 }}
+            initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: '-40px' }}
             transition={{
-              duration: 0.55,
-              delay: idx * 0.12,
+              duration: 0.5,
+              delay: idx * 0.1,
               ease: [0.22, 1, 0.36, 1]
             }}
-            whileHover={{
-              y: -4,
-              transition: { duration: 0.25, ease: 'easeOut' }
-            }}
           >
-            <div className="fr-audit-badge">
-              <span className="fr-audit-dot">●</span>
-              <span>{outcome.audit}</span>
-            </div>
+            <p className="fr-audit"><span>{outcome.audit}</span></p>
             <div className="fr-client-name">
               <h3><span>{outcome.name}</span></h3>
               <p><span>{outcome.company}</span></p>
             </div>
-            <p className="fr-outcome-copy"><span>“{outcome.description}”</span></p>
+            <p className="fr-outcome-copy"><span>{outcome.description}</span></p>
             <div className="fr-figure">
               <strong>{outcome.figure}</strong>
               <span>{outcome.label}</span>
@@ -700,9 +695,14 @@ export function FRAdvisoryLanding() {
     <section className="fr-section fr-about" id="about" aria-labelledby="about-title">
       <div className="fr-container fr-about-grid">
         <aside className="fr-portrait-column" aria-label="Strategist credentials">
-          <div className="fr-portrait-frame" aria-hidden="true">
-            <span>F R</span>
-            <i />
+          <div className="fr-portrait-frame">
+            <img
+              src={frPortraitImg}
+              alt="FR - Faizal Rahman, Strategic Business Advisor"
+              className="fr-portrait-image"
+              loading="lazy"
+            />
+            <i className="fr-portrait-border-accent" aria-hidden="true" />
           </div>
           <div className="fr-stat-rows">
             <div>
@@ -774,8 +774,12 @@ export function FRAdvisoryLanding() {
 
     <footer className="fr-footer">
       <div className="fr-container fr-footer-inner">
-        <a className="fr-wordmark" href="#top"><span>F R</span></a>
-        <a href="https://grow.profitfr.com/podcast" target="_blank" rel="noreferrer"><span>The Podcast</span></a>
+        <a className="fr-wordmark" href="#top" aria-label="Go ToFR Home">
+          <img src={frLogoImg} alt="FR" className="fr-logo-img" />
+        </a>
+        <button className="fr-footer-apply" type="button" onClick={() => openModal('Direct_FR')}>
+          <span>Apply Now →</span>
+        </button>
         <p><span>© 2025 Go ToFR. All rights reserved.</span></p>
       </div>
     </footer>
@@ -825,7 +829,7 @@ const styles = `
 }
 
 .fr-container {
-  max-width: 1440px;
+  max-width: 1080px;
   margin: 0 auto;
   padding: 0 clamp(24px, 5vw, 80px);
 }
@@ -834,7 +838,7 @@ const styles = `
   position: sticky;
   top: 0;
   z-index: 100;
-  height: 72px;
+  min-height: 76px;
   background: rgba(250, 250, 248, 0.88);
   border-bottom: 1px solid rgba(226, 226, 220, 0.85);
   backdrop-filter: blur(24px) saturate(180%);
@@ -842,38 +846,26 @@ const styles = `
 }
 
 .fr-nav-inner {
-  height: 72px;
+  min-height: 76px;
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 32px;
+  padding-top: 8px;
+  padding-bottom: 8px;
 }
 
 .fr-wordmark {
   display: inline-flex;
-  align-items: baseline;
-  gap: 5px;
-  color: var(--obsidian);
-  font-family: var(--serif);
-  font-size: 24px;
-  font-weight: 700;
-  letter-spacing: 0.08em;
-  line-height: 1;
+  align-items: center;
   text-decoration: none;
-  white-space: nowrap;
-  transition: transform 0.25s cubic-bezier(0.22, 1, 0.36, 1), color 0.25s ease;
 }
 
-.fr-wordmark:hover {
-  transform: scale(1.04);
-}
-
-.fr-wordmark-dot {
-  display: inline-block;
-  width: 5px;
-  height: 5px;
-  border-radius: 50%;
-  background: var(--gold);
+.fr-logo-img {
+  height: 54px;
+  width: 54px;
+  display: block;
+  object-fit: contain;
 }
 
 .fr-nav-links {
@@ -1296,8 +1288,8 @@ const styles = `
 
 .fr-trusted-header {
   text-align: center;
-  max-width: 860px;
-  margin: 0 auto 48px;
+  max-width: 940px;
+  margin: 0 auto 52px;
 }
 
 .fr-trusted-heading {
@@ -1320,22 +1312,22 @@ const styles = `
   margin: 0;
   color: var(--obsidian);
   font-family: var(--serif);
-  font-size: clamp(20px, 2.3vw, 26px);
+  font-size: clamp(24px, 3.2vw, 34px);
   font-style: italic;
-  font-weight: 300;
-  line-height: 1.55;
-  letter-spacing: -0.01em;
+  font-weight: 400;
+  line-height: 1.5;
+  letter-spacing: -0.015em;
 }
 
 .fr-merged-quote cite {
   display: inline-block;
-  margin-top: 16px;
+  margin-top: 20px;
   color: var(--gold-deep);
   font-family: var(--sans);
-  font-size: 13px;
+  font-size: 14px;
   font-style: normal;
   font-weight: 700;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
 }
 
@@ -1485,123 +1477,78 @@ const styles = `
   font-style: italic;
 }
 
-.fr-proof .fr-section-heading {
-  margin-bottom: 48px;
-}
-
-.fr-outcome-list {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-}
-
 .fr-outcome-row {
-  position: relative;
-  display: grid;
-  grid-template-columns: 140px 220px 1fr auto;
+  display: flex;
   align-items: center;
-  gap: 32px;
-  padding: 34px 38px;
-  border-radius: 16px;
-  background: #FFFFFF;
-  border: 1px solid rgba(226, 226, 220, 0.95);
-  box-shadow: 0 8px 24px -6px rgba(0, 0, 0, 0.04), inset 0 1px 0 #FFFFFF;
-  transition: all 0.3s cubic-bezier(0.22, 1, 0.36, 1);
-  cursor: default;
+  gap: 34px;
+  padding: 40px 0;
+  border-bottom: 1px solid var(--border);
 }
 
-.fr-outcome-row:hover {
-  background: #FFFFFF;
-  border-color: rgba(197, 168, 128, 0.65);
-  box-shadow: 0 20px 48px -10px rgba(0, 0, 0, 0.08), 0 0 24px rgba(197, 168, 128, 0.16);
-}
-
-.fr-audit-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 7px;
-  width: fit-content;
-  padding: 6px 14px;
-  border-radius: 100px;
-  background: rgba(197, 168, 128, 0.14);
-  border: 1px solid rgba(197, 168, 128, 0.35);
-  color: var(--gold-deep);
-  font-family: var(--sans);
-  font-size: 11.5px;
-  font-weight: 700;
+.fr-audit {
+  width: 110px;
+  margin: 0;
+  flex-shrink: 0;
+  color: var(--obsidian-30);
+  font-size: 11px;
+  font-weight: 600;
   letter-spacing: 0.08em;
-  text-transform: uppercase;
+  line-height: 1.4;
 }
 
-.fr-audit-dot {
-  font-size: 8px;
-  color: var(--gold);
+.fr-client-name {
+  width: 190px;
+  flex-shrink: 0;
 }
 
 .fr-client-name h3 {
   margin: 0;
   color: var(--obsidian);
   font-family: var(--serif);
-  font-size: 22px;
+  font-size: 20px;
   font-weight: 700;
-  letter-spacing: -0.015em;
   line-height: 1.2;
 }
 
 .fr-client-name p {
   margin: 6px 0 0;
-  color: var(--obsidian-60);
-  font-family: var(--sans);
-  font-size: 13.5px;
-  font-weight: 500;
-  line-height: 1.4;
+  color: var(--obsidian-30);
+  font-size: 13px;
+  line-height: 18px;
 }
 
 .fr-outcome-copy {
+  max-width: 36ch;
   margin: 0;
-  color: var(--obsidian);
-  font-family: var(--serif);
-  font-size: 17.5px;
-  font-style: italic;
-  font-weight: 400;
-  line-height: 28px;
+  color: var(--obsidian-60);
+  font-size: 15px;
+  line-height: 24px;
 }
 
 .fr-figure {
   margin-left: auto;
   flex-shrink: 0;
   text-align: right;
-  min-width: 140px;
 }
 
 .fr-figure strong {
   display: block;
   color: var(--obsidian);
   font-family: var(--serif);
-  font-size: clamp(52px, 5.5vw, 76px);
+  font-size: clamp(48px, 5vw, 72px);
   font-weight: 700;
   letter-spacing: -0.04em;
   line-height: 0.95;
-  background: linear-gradient(135deg, #0A0A0B 0%, #353538 45%, #8C7355 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  transition: transform 0.3s ease;
-}
-
-.fr-outcome-row:hover .fr-figure strong {
-  transform: scale(1.04);
 }
 
 .fr-figure span {
   display: block;
-  margin-top: 6px;
-  color: var(--gold-deep);
-  font-family: var(--sans);
-  font-size: 11.5px;
-  font-weight: 700;
-  letter-spacing: 0.1em;
+  margin-top: 7px;
+  color: var(--gold);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.06em;
   line-height: 1.3;
-  text-transform: uppercase;
 }
 
 .fr-matrix {
@@ -1757,27 +1704,41 @@ const styles = `
 
 .fr-portrait-frame {
   position: relative;
-  display: grid;
+  display: block;
   width: 100%;
   aspect-ratio: 3 / 4;
-  place-items: center;
-  border: 1px solid var(--border);
+  border-radius: 14px;
+  overflow: hidden;
+  border: 1px solid rgba(197, 168, 128, 0.45);
   background: var(--canvas-sunken);
+  box-shadow: 0 16px 40px -12px rgba(0, 0, 0, 0.12);
 }
 
-.fr-portrait-frame > span {
-  color: var(--obsidian-10);
-  font-family: var(--serif);
-  font-size: 80px;
-  font-weight: 300;
-  line-height: 1;
+.fr-portrait-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 15%;
+  display: block;
+  transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-.fr-portrait-frame > i {
+.fr-portrait-frame:hover .fr-portrait-image {
+  transform: scale(1.035);
+}
+
+.fr-portrait-border-accent {
   position: absolute;
   inset: 12px;
-  border: 1px solid var(--gold);
-  opacity: 0.35;
+  border: 1px solid rgba(231, 191, 105, 0.4);
+  border-radius: 8px;
+  pointer-events: none;
+  transition: inset 0.35s ease, border-color 0.35s ease;
+}
+
+.fr-portrait-frame:hover .fr-portrait-border-accent {
+  inset: 15px;
+  border-color: rgba(231, 191, 105, 0.75);
 }
 
 .fr-stat-rows div {
@@ -2105,6 +2066,24 @@ const styles = `
   line-height: 18px;
 }
 
+.fr-footer-apply {
+  background: transparent;
+  border: 0;
+  color: var(--obsidian-60);
+  font-family: var(--sans);
+  font-size: 13.5px;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 8px 16px;
+  border-radius: 100px;
+  transition: all 0.22s ease;
+}
+
+.fr-footer-apply:hover {
+  color: var(--obsidian);
+  background: rgba(0, 0, 0, 0.04);
+}
+
 .fr-modal-overlay {
   position: fixed;
   inset: 0;
@@ -2336,23 +2315,24 @@ const styles = `
   }
 
   .fr-outcome-row {
+    display: grid;
     grid-template-columns: 1fr auto;
-    gap: 20px;
-    padding: 28px 24px;
+    gap: 18px 24px;
+    align-items: end;
   }
 
-  .fr-audit-badge {
-    grid-column: 1 / -1;
+  .fr-audit,
+  .fr-client-name {
+    width: auto;
   }
 
   .fr-outcome-copy {
     grid-column: 1 / -1;
-    font-size: 16px;
-    line-height: 25px;
+    max-width: 46ch;
   }
 
   .fr-figure {
-    grid-row: 2;
+    grid-row: 1 / span 2;
     grid-column: 2;
   }
 }
@@ -2385,8 +2365,8 @@ const styles = `
 
   .fr-outcome-row {
     grid-template-columns: 1fr;
-    gap: 16px;
-    padding: 24px 20px;
+    gap: 14px;
+    padding: 34px 0;
   }
 
   .fr-figure {
@@ -2394,10 +2374,6 @@ const styles = `
     grid-column: auto;
     margin-left: 0;
     text-align: left;
-  }
-
-  .fr-figure strong {
-    font-size: 48px;
   }
 
   .fr-stage-grid {
